@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node dist/index.js"
+    "build:docker": "docker build -t website-backend .",
+    "start": "node dist/index.js",
+    "start:local": "yarn build && node dist/index.js",
+    "start:docker": "docker run -p 5000:5000 -it website-backend"
   },
   "author": "Ivan Tchernev",
   "license": "MIT",
@@ -22,6 +25,7 @@
   },
   "dependencies": {
     "fastify": "^3.9.2",
+    "graphql": "^15.4.0",
     "mercurius": "^6.9.0",
     "mercurius-codegen": "^1.2.0"
   }

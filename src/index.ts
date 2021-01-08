@@ -4,6 +4,8 @@ import mercuriusCodegen, { gql } from 'mercurius-codegen'
 import { Resolvers } from './graphql/generated';
 
 const app = Fastify()
+const PORT = 5000;
+const isDevelopment = false // process.env.NODE_ENV !== 'production'
 
 const buildContext = async (req: FastifyRequest, _reply: FastifyReply) => {
   return {
@@ -49,4 +51,15 @@ mercuriusCodegen(app, {
   targetPath: './src/graphql/generated.ts'
 }).catch(console.error)
 
-app.listen(3000);
+app.listen(
+  PORT,
+  isDevelopment ? '127.0.0.1' : '0.0.0.0',
+  (err, address) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    console.log('\n', `🚀 Server ready at ${address}/graphql`, '\n');
+  },
+);
